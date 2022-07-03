@@ -11,7 +11,7 @@ defmodule Usuaris.Account do
     field :cpf, :string
     embeds_one :address, Address
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false
