@@ -3,7 +3,7 @@ defmodule Usuaris.Integrations.Viacep do
   plug Tesla.Middleware.BaseUrl, "https://viacep.com.br"
   plug Tesla.Middleware.JSON
 
-  def get_address_by_postal_code(postal_code) do
+  def get_postal_code_details(postal_code) do
     get("/ws/#{postal_code}/json") |> handle_response()
   end
 

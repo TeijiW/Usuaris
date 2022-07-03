@@ -20,4 +20,6 @@ defmodule Usuaris.Account.Address do
     |> cast(attrs, @optional_fields ++ @required_fields)
     |> validate_required(@required_fields)
   end
+
+  def fields, do: Enum.map(@optional_fields ++ @required_fields, &Atom.to_string/1)
 end
