@@ -9,5 +9,7 @@ defmodule Usuaris.Repo.Migrations.CreateAccounts do
 
       timestamps()
     end
+
+    create index(:accounts, [:cpf], unique: true)
   end
 end
