@@ -23,7 +23,7 @@ defmodule Usuaris.Accounts.CreateTest do
   end
 
   describe "call/1" do
-    test "with success load all address by postal code" do
+    test "with success loading all address by postal code" do
       create_params = %{
         "name" => "John Doe",
         "cpf" => Brcpfcnpj.cpf_generate(),
@@ -35,7 +35,7 @@ defmodule Usuaris.Accounts.CreateTest do
       assert inserted_account.address.postal_code == "71261151"
     end
 
-    test "with success load some fields of address by postal code" do
+    test "with success loading some address fields of address by postal code" do
       create_params = %{
         "name" => "John Doe",
         "cpf" => Brcpfcnpj.cpf_generate(),
@@ -48,7 +48,7 @@ defmodule Usuaris.Accounts.CreateTest do
       assert inserted_account.address.state == "SP"
     end
 
-    test_with_mock "with error try load all address by not found postal code", Tesla,
+    test_with_mock "with error try loading all address by not found postal code", Tesla,
       execute: fn _, _, _ -> {:ok, %Tesla.Env{body: %{"erro" => "true"}}} end do
       create_params = %{
         "name" => "John Doe",
@@ -66,7 +66,7 @@ defmodule Usuaris.Accounts.CreateTest do
              ]
     end
 
-    test_with_mock "with error try load some address fields by not found postal code", Tesla,
+    test_with_mock "with error try loading some address fields by not found postal code", Tesla,
       execute: fn _, _, _ -> {:ok, %Tesla.Env{body: %{"erro" => "true"}}} end do
       create_params = %{
         "name" => "John Doe",
@@ -86,7 +86,7 @@ defmodule Usuaris.Accounts.CreateTest do
              ]
     end
 
-    test_with_mock "with error try load all address by invalid postal code", Tesla,
+    test_with_mock "with error try loading all address by invalid postal code", Tesla,
       execute: fn _, _, _ -> {:ok, %Tesla.Env{status: 400}} end do
       create_params = %{
         "name" => "John Doe",
@@ -104,7 +104,7 @@ defmodule Usuaris.Accounts.CreateTest do
              ]
     end
 
-    test_with_mock "with error try load some address fields by invalid postal code", Tesla,
+    test_with_mock "with error try loading some address fields by invalid postal code", Tesla,
       execute: fn _, _, _ -> {:ok, %Tesla.Env{status: 400}} end do
       create_params = %{
         "name" => "John Doe",
