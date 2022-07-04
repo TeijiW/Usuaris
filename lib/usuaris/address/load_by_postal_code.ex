@@ -24,7 +24,8 @@ defmodule Usuaris.Addresses.LoadByPostalCode do
       "street" => data["logradouro"],
       "neighborhood" => data["bairro"],
       "city" => data["localidade"],
-      "state" => data["uf"]
+      "state" => data["uf"],
+      "complement" => data["complemento"]
     }
   end
 
