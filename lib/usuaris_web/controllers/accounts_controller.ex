@@ -15,6 +15,12 @@ defmodule UsuarisWeb.AccountsController do
     end
   end
 
+  def update(conn, %{"id" => account_id} = params) do
+    with {:ok, %Account{} = updated_account} <- Accounts.update(account_id, params) do
+      json(conn, updated_account)
+    end
+  end
+
   def create(conn, params) do
     with {:ok, %Account{} = account} <- Accounts.create(params) do
       json(conn, account)
