@@ -21,13 +21,20 @@ defmodule Usuaris.Account do
     account
     |> cast(attrs, @fields)
     |> cast_embed(:address, required: true, with: &Address.changeset/2)
-    |> ignore_cpf_when_update()
+    |> only_numbers(:cpf)
+    |> ignore_cpf_change_on_update()
     |> validate_cpf(:cpf)
     |> unique_constraint(:cpf)
     |> validate_required(@fields)
   end
 
-  defp ignore_cpf_when_update(changeset) do
+  defp only_numbers(changeset, field) do
+    field_value = get_field(changeset, field)
+    field_new_value = String.replace(field_value, ~r/[^\d]/, "")
+    put_change(changeset, field, field_new_value)
+  end
+
+  defp ignore_cpf_change_on_update(changeset) do
     cpf_update = get_change(changeset, :cpf, nil)
     current_cpf = changeset.data.cpf
 
