@@ -22,7 +22,7 @@ defmodule Usuaris.Account do
     |> cast(attrs, @fields)
     |> cast_embed(:address, required: true, with: &Address.changeset/2)
     |> only_numbers(:cpf)
-    |> ignore_cpf_change_on_update()
+    |> validate_cpf_change()
     |> validate_cpf(:cpf)
     |> unique_constraint(:cpf)
     |> validate_required(@fields)
@@ -34,12 +34,12 @@ defmodule Usuaris.Account do
     put_change(changeset, field, field_new_value)
   end
 
-  defp ignore_cpf_change_on_update(changeset) do
-    cpf_update = get_change(changeset, :cpf, nil)
+  defp validate_cpf_change(changeset) do
+    cpf_update = get_field(changeset, :cpf, nil)
     current_cpf = changeset.data.cpf
 
     if cpf_update != current_cpf && not is_nil(current_cpf),
-      do: put_change(changeset, :cpf, current_cpf),
+      do: add_error(changeset, :cpf, "can't be updated"),
       else: changeset
   end
 end
