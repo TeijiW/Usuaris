@@ -26,4 +26,12 @@ defmodule UsuarisWeb.AccountsController do
       json(conn, updated_account)
     end
   end
+
+  def delete(conn, %{"id" => account_id} = _params) do
+    with {:ok, %Account{} = _deleted_account} <- Accounts.delete(account_id) do
+      conn
+      |> Plug.Conn.send_resp(200, [])
+      |> Plug.Conn.halt()
+    end
+  end
 end
