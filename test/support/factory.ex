@@ -3,7 +3,7 @@ defmodule Support.Factory do
 
   def account_factory do
     %Usuaris.Account{
-      name: "John Doe",
+      name: sequence(:name, &"John Doe #{&1}"),
       cpf: Brcpfcnpj.cpf_generate(),
       address: %{
         city: "Cuiabá",
