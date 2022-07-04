@@ -44,7 +44,8 @@ defmodule Usuaris.MixProject do
       {:tesla, "~> 1.4"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:brcpfcnpj, "~> 1.0"}
+      {:brcpfcnpj, "~> 1.0"},
+      {:mock, "~> 0.3.0", only: :test}
     ]
   end
 
