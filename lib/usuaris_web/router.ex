@@ -8,6 +8,6 @@ defmodule UsuarisWeb.Router do
   scope "/api", UsuarisWeb do
     pipe_through :api
 
-    resources("/accounts", AccountsController, only: [:index])
+    resources("/accounts", AccountsController, only: [:index, :show])
   end
 end
