@@ -4,6 +4,8 @@ defmodule Usuaris.Account do
   import Brcpfcnpj.Changeset
   alias Usuaris.Account.Address
 
+  @derive {Jason.Encoder, except: [:__meta__]}
+
   @fields [:name, :cpf]
 
   schema "accounts" do

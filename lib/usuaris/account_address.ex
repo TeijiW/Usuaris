@@ -2,6 +2,8 @@ defmodule Usuaris.Account.Address do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive Jason.Encoder
+
   @optional_fields [:number, :complement]
   @required_fields [:street, :neighborhood, :city, :state, :postal_code]
 

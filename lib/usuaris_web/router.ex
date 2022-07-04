@@ -7,5 +7,7 @@ defmodule UsuarisWeb.Router do
 
   scope "/api", UsuarisWeb do
     pipe_through :api
+
+    resources("/accounts", AccountsController, only: [:index])
   end
 end
