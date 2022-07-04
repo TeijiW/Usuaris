@@ -11,6 +11,8 @@ defmodule Usuaris.Addresses.LoadByPostalCode do
     end
   end
 
+  def call(address_params), do: address_params
+
   defp replace_empty_address_fields(parsed_address, raw_address) do
     Account.Address.fields()
     |> Enum.map(&get_address_field(&1, parsed_address, raw_address))
