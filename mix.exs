@@ -45,7 +45,8 @@ defmodule Usuaris.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:brcpfcnpj, "~> 1.0"},
-      {:mock, "~> 0.3.0", only: :test}
+      {:mock, "~> 0.3.0", only: :test},
+      {:ex_machina, "~> 2.7.0", only: :test}
     ]
   end
 

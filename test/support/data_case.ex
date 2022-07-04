@@ -24,6 +24,7 @@ defmodule Usuaris.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import Usuaris.DataCase
+      import Support.Factory
     end
   end
 
