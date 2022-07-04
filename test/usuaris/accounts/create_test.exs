@@ -123,5 +123,35 @@ defmodule Usuaris.Accounts.CreateTest do
                state: {"can't be blank", [validation: :required]}
              ]
     end
+
+    test "with error invalid cnpj" do
+      create_params = %{
+        "name" => "John Doe",
+        "cpf" => "123",
+        "address" => %{"postal_code" => "71261151"}
+      }
+
+      assert {:error, %Ecto.Changeset{} = changeset} = Create.call(create_params)
+      assert changeset.errors == [cpf: {"Invalid Cpf", [validation: :cpf]}]
+    end
+
+    test "with error already used cnpj" do
+      cpf = Brcpfcnpj.cpf_generate()
+      insert(:account, cpf: cpf)
+
+      create_params = %{
+        "name" => "John Doe",
+        "cpf" => cpf,
+        "address" => %{"postal_code" => "71261151"}
+      }
+
+      assert {:error, %Ecto.Changeset{} = changeset} = Create.call(create_params)
+
+      assert changeset.errors == [
+               cpf:
+                 {"has already been taken",
+                  [{:constraint, :unique}, {:constraint_name, "accounts_cpf_index"}]}
+             ]
+    end
   end
 end
