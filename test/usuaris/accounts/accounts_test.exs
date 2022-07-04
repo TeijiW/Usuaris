@@ -1,4 +1,4 @@
-defmodule Usuaris.Accounts.AccountsTest do
+defmodule Usuaris.AccountsTest do
   use ExUnit.Case
-  doctest Usuaris.Accounts.Accounts
+  doctest Usuaris.Accounts
 end
