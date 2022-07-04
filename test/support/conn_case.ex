@@ -23,6 +23,7 @@ defmodule UsuarisWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import UsuarisWeb.ConnCase
+      import Support.Factory
 
       alias UsuarisWeb.Router.Helpers, as: Routes
 
