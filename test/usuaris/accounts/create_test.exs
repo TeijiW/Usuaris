@@ -16,9 +16,14 @@ defmodule Usuaris.Accounts.CreateTest do
     "uf" => "DF"
   }
 
+  setup_with_mocks([
+    {Tesla, [], [execute: fn _, _, _ -> {:ok, %Tesla.Env{body: @address, status: 200}} end]}
+  ]) do
+    :ok
+  end
+
   describe "call/1" do
-    test_with_mock "with success load all address by postal code", Tesla,
-      execute: fn _, _, _ -> {:ok, %Tesla.Env{body: @address, status: 200}} end do
+    test "with success load all address by postal code" do
       create_params = %{
         "name" => "John Doe",
         "cpf" => Brcpfcnpj.cpf_generate(),
@@ -30,8 +35,7 @@ defmodule Usuaris.Accounts.CreateTest do
       assert inserted_account.address.postal_code == "71261151"
     end
 
-    test_with_mock "with success load some fields of address by postal code", Tesla,
-      execute: fn _, _, _ -> {:ok, %Tesla.Env{body: @address, status: 200}} end do
+    test "with success load some fields of address by postal code" do
       create_params = %{
         "name" => "John Doe",
         "cpf" => Brcpfcnpj.cpf_generate(),
