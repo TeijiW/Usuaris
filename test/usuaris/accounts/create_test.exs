@@ -124,7 +124,7 @@ defmodule Usuaris.Accounts.CreateTest do
              ]
     end
 
-    test "with error invalid cnpj" do
+    test "with error invalid cpf" do
       create_params = %{
         "name" => "John Doe",
         "cpf" => "123",
@@ -135,7 +135,7 @@ defmodule Usuaris.Accounts.CreateTest do
       assert changeset.errors == [cpf: {"Invalid Cpf", [validation: :cpf]}]
     end
 
-    test "with error already used cnpj" do
+    test "with error already used cpf" do
       cpf = Brcpfcnpj.cpf_generate()
       insert(:account, cpf: cpf)
 
