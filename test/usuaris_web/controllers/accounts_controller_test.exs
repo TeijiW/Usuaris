@@ -51,7 +51,7 @@ defmodule UsuarisWeb.AccountsControllerTest do
   end
 
   describe "Get details from an account" do
-    test "with an account that exists", %{conn: conn} do
+    test "that exists", %{conn: conn} do
       inserted_account = insert(:account)
 
       assert response =
@@ -62,7 +62,7 @@ defmodule UsuarisWeb.AccountsControllerTest do
       assert response["address"]["postal_code"] == inserted_account.address.postal_code
     end
 
-    test "with an account that not exists", %{conn: conn} do
+    test "that not exists", %{conn: conn} do
       assert response = conn |> get(accounts_path(conn, :show, 123)) |> json_response(404)
       assert response["status"] == "Not Found"
     end
@@ -124,6 +124,62 @@ defmodule UsuarisWeb.AccountsControllerTest do
                  "street" => ["can't be blank"]
                }
              }
+    end
+  end
+
+  describe "Update an account" do
+    setup do
+      account = insert(:account)
+      [account: account]
+    end
+
+    test "that exists", %{conn: conn, account: inserted_account} do
+      update_params = %{
+        "name" => "Updated John Foo Doe",
+        "cpf" => inserted_account.cpf,
+        "address" => %{
+          city: "São Paulo",
+          neighborhood: "Pinheiros",
+          postal_code: "78040123",
+          state: "SP",
+          street: "Rua Inexistente"
+        }
+      }
+
+      assert response =
+               conn
+               |> put(accounts_path(conn, :update, inserted_account.id), update_params)
+               |> json_response(200)
+
+      assert response["name"] == "Updated John Foo Doe"
+      assert response["cpf"] == inserted_account.cpf
+      assert response["address"]["postal_code"] == "78040123"
+      assert response["address"]["state"] == "SP"
+    end
+
+    test "that exists with error trying update the cpf field", %{
+      conn: conn,
+      account: inserted_account
+    } do
+      update_params = %{
+        "name" => "Updated John Foo Doe",
+        "cpf" => Brcpfcnpj.cpf_generate(),
+        "address" => %{
+          city: "Cuiabá",
+          neighborhood: "Santa Rosa",
+          postal_code: "78040365",
+          state: "MT",
+          street: "Avenida Miguel Sutil"
+        }
+      }
+
+      assert response =
+               conn
+               |> put(accounts_path(conn, :update, inserted_account.id), update_params)
+               |> json_response(400)
+
+      assert response["status"] == "Bad Request"
+      assert response["errors"] == %{"cpf" => ["can't be updated"]}
     end
   end
 end
