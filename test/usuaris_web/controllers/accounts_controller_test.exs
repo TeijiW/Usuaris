@@ -182,4 +182,22 @@ defmodule UsuarisWeb.AccountsControllerTest do
       assert response["errors"] == %{"cpf" => ["can't be updated"]}
     end
   end
+
+  describe "Delete an account" do
+    test "that exists", %{conn: conn} do
+      inserted_account = insert(:account)
+
+      assert response =
+               conn
+               |> delete(accounts_path(conn, :delete, inserted_account.id))
+               |> response(200)
+
+      assert response == ""
+    end
+
+    test "that not exists", %{conn: conn} do
+      assert response = conn |> delete(accounts_path(conn, :delete, 123)) |> json_response(404)
+      assert response["status"] == "Not Found"
+    end
+  end
 end
