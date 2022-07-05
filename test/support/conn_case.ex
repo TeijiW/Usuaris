@@ -24,8 +24,7 @@ defmodule UsuarisWeb.ConnCase do
       import Phoenix.ConnTest
       import UsuarisWeb.ConnCase
       import Support.Factory
-
-      alias UsuarisWeb.Router.Helpers, as: Routes
+      import UsuarisWeb.Router.Helpers
 
       # The default endpoint for testing
       @endpoint UsuarisWeb.Endpoint
