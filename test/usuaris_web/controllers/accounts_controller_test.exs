@@ -2,6 +2,19 @@ defmodule UsuarisWeb.AccountsControllerTest do
   use UsuarisWeb.ConnCase, async: false
   import Mock
 
+  @address %{
+    "bairro" => "Setor Leste (Vila Estrutural)",
+    "cep" => "71261-155",
+    "complemento" => "",
+    "ddd" => "61",
+    "gia" => "",
+    "ibge" => "5300108",
+    "localidade" => "Brasília",
+    "logradouro" => "Quadra 2 Conjunto 11",
+    "siafi" => "9701",
+    "uf" => "DF"
+  }
+
   setup_with_mocks([
     {Tesla, [], [execute: fn _, _, _ -> {:ok, %Tesla.Env{body: @address, status: 200}} end]}
   ]) do
